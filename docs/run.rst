@@ -11,7 +11,8 @@ It runs a proxy server on your system.
 
    $ wsgi-proxy -p 8080
 
-You can change the server implementation using ``--server`` option.
+You can change the server implementation using :option:`--server
+<wsgi-proxy --server>` option.
 Default is ``waitress``.
 
 .. sourcecode:: console

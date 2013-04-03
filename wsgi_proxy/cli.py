@@ -1,6 +1,34 @@
 """:mod:`wsgi_proxy.cli` --- :program:`wsgi-proxy` command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. program:: wsgi-proxy
+
+.. option:: -h, --help
+
+   Print help message.
+
+.. option:: -p <port>, --port <port>
+
+   The port number to listen.  Default is 8080.
+
+.. option:: -H <host>, --host <host>
+
+   The hostname to listen.  Default is ``127.0.0.1``.
+
+.. option:: --server <server>
+
+   The WSGI server implementation to use.  Default is ``waitress``.
+
+.. option:: -v, --verbose
+
+   Print debug logs as well.  It internally sets :mod:`logging` level
+   to :const:`~logging.DEBUG`.
+
+.. option:: -q, --quiet
+
+   Operate quitely.  It internally sets :mod:`logging` level
+   to :const:`~logging.ERROR`.
+
 """
 import functools
 import logging
