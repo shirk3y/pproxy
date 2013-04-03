@@ -1,5 +1,16 @@
-""":mod:`wsgi_proxy` --- WSGI proxy app
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+""":mod:`wsgi_proxy` --- Python package of :program:`wsgi-proxy`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is an importable Python package that consists of basic WSGI app
+and other frontends around it.  The most important thing for you is
+probably :data:`app` and its type :class:`WSGIProxyApplication`.
+
+You can use this with other third-party WSGI servers.  For example:
+
+.. sourcecode:: console
+
+   $ pip install gunicorn
+   $ gunicorn -p8080 wsgi_proxy:app
 
 """
 import httplib
@@ -7,6 +18,7 @@ import logging
 import urlparse
 
 
+#: (:class:`frozenset`) The set of hop-by-hop headers.
 HOPPISH_HEADERS = frozenset([
     'connection', 'keep-alive', 'proxy-authenticate',
     'proxy-authorization', 'te', 'trailers', 'transfer-encoding',
@@ -124,4 +136,7 @@ class WSGIProxyApplication(object):
         return self.handler(environ, start_response)
 
 
+#: (:class:`WSGIProxyApplication`) The builtin instance of
+#: :class:`WSGIProxyApplication`.  In the most cases what all you need
+#: is only this.
 app = WSGIProxyApplication()
