@@ -23,7 +23,7 @@ setup(
     author_email='mikeal.rogers' '@' 'gmail.com',
     maintainer='Hong Minhee',
     maintainer_email='minhee' '@' 'dahlia.kr',
-    url='http://code.google.com/p/wsgi-proxy/',
+    url='https://bitbucket.org/dahlia/wsgi-proxy',
     license='Apache License 2.0',
     packages=['wsgi_proxy'],
     platforms=['Any'],
