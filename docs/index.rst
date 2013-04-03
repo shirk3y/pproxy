@@ -12,6 +12,7 @@ This package implements a simple WSGI app that implements HTTP 1.0 proxy.
    :maxdepth: 2
 
    install
+   run
    wsgi_proxy
 
 
