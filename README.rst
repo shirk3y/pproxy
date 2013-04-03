@@ -22,8 +22,8 @@ It provides a WSGI application object (``wsgi_proxy:app``) as well:
    $ gunicorn -p8080 wsgi_proxy:app
 
 
-Community
----------
+Links
+-----
 
 Bitbucket (Mercurial repository)
    https://bitbucket.org/dahlia/wsgi-proxy
