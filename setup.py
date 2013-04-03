@@ -1,3 +1,5 @@
+from __future__ import with_statement
+
 try:
     from setuptools import setup
     extra_options = {
@@ -15,10 +17,19 @@ except ImportError:
 from wsgi_proxy.version import VERSION
 
 
+def readme():
+    try:
+        with open('README.rst') as f:
+            return f.read()
+    except IOError:
+        pass
+
+
 setup(
     name='wsgi-proxy',
     version=VERSION,
     description='WSGI proxy application',
+    long_description=readme(),
     author='OSAF, Mikeal Rogers',
     author_email='mikeal.rogers' '@' 'gmail.com',
     maintainer='Hong Minhee',
