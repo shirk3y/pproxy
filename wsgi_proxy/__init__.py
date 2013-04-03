@@ -18,7 +18,8 @@ import logging
 import urlparse
 
 
-#: (:class:`frozenset`) The set of hop-by-hop headers.
+#: (:class:`frozenset`) The set of hop-by-hop headers.  All header names
+#: all normalized to lowercase.
 HOPPISH_HEADERS = frozenset([
     'connection', 'keep-alive', 'proxy-authenticate',
     'proxy-authorization', 'te', 'trailers', 'transfer-encoding',
@@ -27,10 +28,26 @@ HOPPISH_HEADERS = frozenset([
 
 
 def is_hop_by_hop(header):
+    """Returns :const:`True` if the given ``header`` is hop by hop.
+
+    :param header: the header name
+    :type header: :class:`basestring`
+    :returns: whether the given ``header`` is hop by hop or not
+    :rtype: :class:`bool`
+
+    """
     return header.lower() in HOPPISH_HEADERS
 
 
 def reconstruct_url(environ):
+    """Reconstruct the remote url from the given WSGI ``environ`` dictionary.
+
+    :param environ: the WSGI environment
+    :type environ: :class:`collections.MutableMapping`
+    :returns: the remote url to proxy
+    :rtype: :class:`basestring`
+
+    """
     # From WSGI spec, PEP 333
     url = environ.get('PATH_INFO', '')
     # Fix ;arg=value in url
@@ -49,8 +66,19 @@ def reconstruct_url(environ):
 
 
 class WSGIProxyApplication(object):
-    """Application to handle requests that need to be proxied"""
+    """WSGI application to handle requests that need to be proxied.
+    You have to instantiate the class before using it as WSGI app::
 
+        from wsgiref.simple_server import make_server
+
+        app = WSGIProxyApplication()
+        make_server('', 8080, app).serve_forever()
+
+    """
+
+    #: (:class:`types.ClassType`) The connection class of :mod:`httplib` module.
+    #: It should be a subtype of :class:`httplib.HTTPConnection`.
+    #: Default is :class:`httplib.HTTPConnection`.
     connection_class = httplib.HTTPConnection
 
     def handler(self, environ, start_response):
