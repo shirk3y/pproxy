@@ -122,3 +122,6 @@ class WSGIProxyApplication(object):
 
     def __call__(self, environ, start_response):
         return self.handler(environ, start_response)
+
+
+app = WSGIProxyApplication()

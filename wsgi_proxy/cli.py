@@ -8,7 +8,7 @@ import optparse
 import sys
 import wsgiref.simple_server
 
-from . import WSGIProxyApplication
+from . import app
 
 
 try:
@@ -90,7 +90,6 @@ def main():
     except KeyError:
         parser.error(options.server +
                      ' is not a supported server implementation')
-    app = WSGIProxyApplication()
     serve(app=app, host=options.host, port=options.port)
 
 
