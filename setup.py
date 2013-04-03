@@ -3,7 +3,8 @@ try:
     extra_options = {
         'entry_points': {
             'console_scripts': ['wsgi-proxy = wsgi_proxy.cli:main']
-        }
+        },
+        'install_requires': ['waitress >= 0.8.2']
     }
 except ImportError:
     from distutils.core import setup

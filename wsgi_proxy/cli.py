@@ -2,6 +2,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
+import functools
 import logging
 import optparse
 import sys
@@ -10,12 +11,37 @@ import wsgiref.simple_server
 from . import WSGIProxyApplication
 
 
+try:
+    import waitress
+    import waitress.channel
+    import waitress.server
+    import waitress.task
+except KeyError:
+    DEFAULT_SERVER = 'wsgiref'
+else:
+    class WaitressWSGIServer(waitress.server.WSGIServer):
+        class channel_class(waitress.channel.HTTPChannel):
+            class task_class(waitress.task.WSGITask):
+                def get_environment(self):
+                    env = waitress.task.WSGITask.get_environment(self)
+                    req = self.request
+                    if req.proxy_scheme and req.proxy_netloc:
+                        env['PATH_INFO'] = '{0}://{1}{2}'.format(
+                            req.proxy_scheme,
+                            req.proxy_netloc,
+                            env['PATH_INFO']
+                        )
+                    return env
+    run_waitress = functools.partial(waitress.serve, _server=WaitressWSGIServer)
+    DEFAULT_SERVER = 'waitress'
+
+
 parser = optparse.OptionParser()
 parser.add_option('-p', '--port', type='int', default=8080,
                   help='Port number [default: %default]')
 parser.add_option('-H', '--host', default='127.0.0.1',
                   help='Host [default: %default]')
-parser.add_option('--server', default='wsgiref',
+parser.add_option('--server', default=DEFAULT_SERVER,
                   help='Server implementation [default: %default]')
 parser.add_option('-v', '--verbose', action='store_const',
                   dest='log_level', const=logging.DEBUG,
