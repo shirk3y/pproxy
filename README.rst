@@ -25,6 +25,9 @@ It provides a WSGI application object (``wsgi_proxy:app``) as well:
 Links
 -----
 
+Docs
+   https://wsgi-proxy.readthedocs.org/
+
 Bitbucket (Mercurial repository)
    https://bitbucket.org/dahlia/wsgi-proxy
 
