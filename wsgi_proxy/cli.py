@@ -1,23 +1,44 @@
+""":mod:`wsgi_proxy.cli` --- :program:`wsgi-proxy` command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def run_wsgiref_proxy_server(args):
-    from wsgiref import simple_server
-    import wsgi_proxy
-    application = wsgi_proxy.WSGIProxyApplication()
-    server = simple_server.make_server(args['host'], args['port'], application)
+"""
+import logging
+import optparse
+import sys
 
+from . import WSGIProxyApplication
+
+
+parser = optparse.OptionParser()
+parser.add_option('-p', '--port', type='int', default=8080,
+                  help='Port number [default: %default]')
+parser.add_option('-H', '--host', default='127.0.0.1',
+                  help='Host [default: %default]')
+parser.add_option('--server', default='wsgiref',
+                  help='Server implementation [default: %default]')
+parser.add_option('-v', '--verbose', action='store_const',
+                  dest='log_level', const=logging.DEBUG,
+                  help='Print debug logs as well')
+parser.add_option('-q', '--quiet', action='store_const',
+                  dest='log_level', const=logging.ERROR, default=logging.INFO,
+                  help='Operate quietly')
+
+
+def run_wsgiref_proxy_server(app, host, port):
+    from wsgiref.simple_server import make_server
+    server = make_server(host, port, app)
+    logger = logging.getLogger(__name__ + '.run_wsgiref_proxy_server')
+    logger.info('Running proxy at http://%s:%s', host, port)
     try:
-        print 'Running proxy at http://%s:%s' % (args['host'], args['port'])
-        while 1:
-            server.handle_request()
+        server.serve_forever()
     except KeyboardInterrupt:
         raise SystemExit
 
 
-def run_cherrypy_proxy_server(args):
-    import cherrypy
-    import wsgi_proxy
-    application = wsgi_proxy.WSGIProxyApplication()
-    server = cherrypy.wsgiserver.CherryPyWSGIServer((args['host'], args['port']), application, server_name="wsgi_proxy")
+def run_cherrypy_proxy_server(app, host, port):
+    from cherrypy.wsgiserver import CherryPyWSGIServer
+    server = CherryPyWSGIServer((host, port), app,
+                                server_name='wsgi_proxy')
     server.start()
     try:
         while 1:
@@ -28,26 +49,17 @@ def run_cherrypy_proxy_server(args):
 
 
 def main():
-    import sys
-    import logging
-    logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
-
-    if not sys.argv:
-        print 'Usage: python run_proxy host=127.0.0.1 port=8080'
-        raise SystemExit
-
-    args = {'port': 8080, 'host': '127.0.0.1'}
-    sys.argv.pop(0)
-    for arg in sys.argv:
-        if '=' not in arg:
-            print 'args must be in key=value format'
-            raise SystemExit
-        args.__setitem__(*arg.split('='))
-
-    if 'server' in args and args['server'] == 'cherrypy':
-        run_cherrypy_proxy_server(args)
-    else:
-        run_wsgiref_proxy_server(args)
+    options, args = parser.parse_args()
+    logger = logging.getLogger()
+    logger.addHandler(logging.StreamHandler(sys.stdout))
+    logger.setLevel(options.log_level)
+    try:
+        serve = globals()['run_{0}_proxy_server'.format(options.server)]
+    except KeyError:
+        parser.error(options.server +
+                     ' is not a supported server implementation')
+    app = WSGIProxyApplication()
+    serve(app=app, host=options.host, port=options.port)
 
 
 if __name__ == '__main__':
