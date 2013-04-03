@@ -11,6 +11,7 @@ This package implements a simple WSGI app that implements HTTP 1.0 proxy.
 .. toctree::
    :maxdepth: 2
 
+   install
    wsgi_proxy
 
 
