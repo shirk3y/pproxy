@@ -14,6 +14,7 @@ This package implements a simple WSGI app that implements HTTP 1.0 proxy.
    install
    run
    wsgi_proxy
+   changelog
 
 
 Repository and bug tracker
