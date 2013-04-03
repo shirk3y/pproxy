@@ -1,7 +1,15 @@
 try:
     from setuptools import setup
+    extra_options = {
+        'entry_points': {
+            'console_scripts': ['wsgi-proxy = wsgi_proxy.cli:main']
+        }
+    }
 except ImportError:
     from distutils.core import setup
+    extra_options = {
+        'scripts': 'scripts/wsgi-proxy'
+    }
 
 from wsgi_proxy.version import VERSION
 
@@ -25,5 +33,6 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Topic :: Software Development :: Libraries :: Python Modules',
-    ]
+    ],
+    **extra_options
 )

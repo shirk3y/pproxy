@@ -1,0 +1,4 @@
+syntax:glob
+wsgi_proxy.egg-info
+.*.swp
+*.pyc

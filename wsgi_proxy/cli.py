@@ -1,7 +1,5 @@
-#!/usr/bin/env python
-# -- Example server run
 
-def run_wsgiref_proxy_server():
+def run_wsgiref_proxy_server(args):
     from wsgiref import simple_server
     import wsgi_proxy
     application = wsgi_proxy.WSGIProxyApplication()
@@ -12,9 +10,10 @@ def run_wsgiref_proxy_server():
         while 1:
             server.handle_request()
     except KeyboardInterrupt:
-        sys.exit()
-        
-def run_cherrypy_proxy_server():
+        raise SystemExit
+
+
+def run_cherrypy_proxy_server(args):
     import cherrypy
     import wsgi_proxy
     application = wsgi_proxy.WSGIProxyApplication()
@@ -25,30 +24,31 @@ def run_cherrypy_proxy_server():
             pass
     except KeyboardInterrupt:
         server.stop()
-        sys.exit()
-    
+        raise SystemExit
 
-if __name__ == "__main__":
+
+def main():
     import sys
     import logging
     logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
-    
-    if len(sys.argv) is 1:
+
+    if not sys.argv:
         print 'Usage: python run_proxy host=127.0.0.1 port=8080'
-        sys.exit
-    
-    args = {'port':8080, 'host':'127.0.0.1'}
+        raise SystemExit
+
+    args = {'port': 8080, 'host': '127.0.0.1'}
     sys.argv.pop(0)
     for arg in sys.argv:
-        if arg.find('=') is -1:
+        if '=' not in arg:
             print 'args must be in key=value format'
-            sys.exit()
+            raise SystemExit
         args.__setitem__(*arg.split('='))
-    
-    if args.has_key('server') and args['server'] == 'cherrypy':
-        run_cherrypy_proxy_server()
+
+    if 'server' in args and args['server'] == 'cherrypy':
+        run_cherrypy_proxy_server(args)
     else:
-        run_wsgiref_proxy_server()
-    
-        
-    
+        run_wsgiref_proxy_server(args)
+
+
+if __name__ == '__main__':
+    main()
