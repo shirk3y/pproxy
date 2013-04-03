@@ -1,14 +1,13 @@
 from setuptools import setup, find_packages
 
+from wsgi_proxy.version import VERSION
+
 desc = """WSGI proxy application"""
 summ = """WSGI application for a simple HTTP 1.0 proxy."""
 
-PACKAGE_NAME = "wsgi-proxy"
-PACKAGE_VERSION = "0.2.6pre"
-
-setup(name=PACKAGE_NAME,
-      version=PACKAGE_VERSION,
-      description=desc,
+setup(name='wsgi-prixy',
+      version=VERSION,
+      description='WSGI proxy application',
       summary=summ,
       author='OSAF, Mikeal Rogers',
       author_email='mikeal.rogers@gmail.com',
