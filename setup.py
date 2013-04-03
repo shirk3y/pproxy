@@ -4,7 +4,7 @@ from wsgi_proxy.version import VERSION
 
 
 setup(
-    name='wsgi-prixy',
+    name='wsgi-proxy',
     version=VERSION,
     description='WSGI proxy application',
     author='OSAF, Mikeal Rogers',
