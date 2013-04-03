@@ -1,4 +1,7 @@
-from setuptools import setup, find_packages
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 from wsgi_proxy.version import VERSION
 
@@ -13,7 +16,7 @@ setup(
     maintainer_email='minhee' '@' 'dahlia.kr',
     url='http://code.google.com/p/wsgi-proxy/',
     license='Apache License 2.0',
-    packages=find_packages(),
+    packages=['wsgi_proxy'],
     platforms=['Any'],
     classifiers=[
         'Development Status :: 4 - Beta',
