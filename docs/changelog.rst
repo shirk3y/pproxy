@@ -4,7 +4,7 @@ Changelog
 Version 0.3.0
 -------------
 
-To be released.  It's a first version released by `Hong Minhee`__,
+Released on April 5, 2013.  It's a first version released by `Hong Minhee`__,
 a new maintainer of :program:`wsgi-proxy`.
 
 - Introduce new :program:`wsgi-proxy` command.
