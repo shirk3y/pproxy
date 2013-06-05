@@ -1,6 +1,18 @@
 Changelog
 =========
 
+Version 0.3.1
+-------------
+
+To be released.
+
+- Fix a url reconsturction bug on several WSGI servers like `Green Unicorn`_.
+  Now it sees ``HTTP_HOST`` and ``wsgi.url_scheme`` when ``PATH_INFO`` is
+  not enough.  [:issue:`1`]
+
+.. _Green Unicorn: http://gunicorn.org/
+
+
 Version 0.3.0
 -------------
 
