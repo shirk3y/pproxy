@@ -50,6 +50,12 @@ def reconstruct_url(environ):
     """
     # From WSGI spec, PEP 333
     url = environ.get('PATH_INFO', '')
+    if not url.startswith(('http://', 'https://')):
+        url = '%s://%s%s' % (
+            environ['wsgi.url_scheme'],
+            environ['HTTP_HOST'],
+            url
+        )
     # Fix ;arg=value in url
     if '%3B' in url:
         url, arg = url.split('%3B', 1)
