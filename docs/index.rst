@@ -41,5 +41,5 @@ It was originally written by `Mikeal Rogers`__, and then has been maintained
 by `Hong Minhee`__.  Distributed under `Apache License 2.0`__.
 
 __ http://www.futurealoof.com/
-__ http://dahlia.kr/
+__ http://hongminhee.org/
 __ http://www.apache.org/licenses/LICENSE-2.0.html

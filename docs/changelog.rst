@@ -26,6 +26,6 @@ a new maintainer of :program:`wsgi-proxy`.
 - Fix :func:`~wsgi_proxy.reconstruct_url()` to correctly constructs
   the remote URL.  [`#1 from Google Code`__]
 
-__ http://dahlia.kr/
+__ http://hongminhee.org/
 __ http://code.google.com/p/wsgi-proxy/issues/detail?id=1
 .. _waitress: https://github.com/Pylons/waitress
