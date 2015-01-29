@@ -4,7 +4,7 @@ Changelog
 Version 0.3.1
 -------------
 
-To be released.
+Released on January 30, 2015.
 
 - Fix a url reconsturction bug on several WSGI servers like `Green Unicorn`_.
   Now it sees ``HTTP_HOST`` and ``wsgi.url_scheme`` when ``PATH_INFO`` is
