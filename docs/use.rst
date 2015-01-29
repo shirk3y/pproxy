@@ -2,7 +2,7 @@ Using
 =====
 
 Suppose :program:`wsgi-proxy` is listening 127.0.0.1:8888.  You can set
-it using :option:`--host <wsgi-proxy --host` and :option:`--port
+it using :option:`--host <wsgi-proxy --host>` and :option:`--port
 <wsgi-proxy --port>` options:
 
 .. sourcecode:: console
@@ -57,7 +57,7 @@ Choose :guilabel:`Use manual proxy configuration`, and then fill
 --------------------
 
 A lot of Unix utilities e.g. :program:`curl`, :program:`wget` and networking
-libraries e.g. :mod:`urllib2` respects :envvar:`http_proxy` environment
+libraries e.g. :mod:`urllib2` respect :envvar:`http_proxy` environment
 variable.
 
 .. sourcecode:: console
